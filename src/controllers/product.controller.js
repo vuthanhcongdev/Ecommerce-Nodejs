@@ -80,6 +80,20 @@ class ProductController {
             metadata: await ProductAdvanceService.getListSearchProduct(req.params)
         }).send(res);
     }
+
+    findAllProducts = async (req, res, next) => {
+        new SuccessResponse({ 
+            message: 'Get All Product Success',
+            metadata: await ProductAdvanceService.findAllProducts(req.query)
+        }).send(res);
+    }
+
+    findProductDetails = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'Get Product Details Success',
+            metadata: await ProductAdvanceService.findProductDetails({ product_id: req.params.product_id })
+        }).send(res);
+    }
     // END QUERY
 }
 

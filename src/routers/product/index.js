@@ -6,7 +6,9 @@ const asyncHandler = require('../../helpers/asyncHandler');
 const { authentication } = require('../../auths/authUtils');
 const router = express.Router();
 
-router.get('/search/:keySearch', asyncHandler(productController.getListSearchProduct)) // không cần authen vì user không cần login cũng phải search được
+router.get('/search/:keySearch', asyncHandler(productController.getListSearchProduct)); // không cần authen vì user không cần login cũng phải search được
+router.get('', asyncHandler(productController.findAllProducts));
+router.get('/details/:product_id', asyncHandler(productController.findProductDetails));
 
 router.use(authentication);
 
