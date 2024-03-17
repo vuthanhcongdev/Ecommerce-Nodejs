@@ -7,7 +7,9 @@ const { findAllDraftsForShop,
     publishProductByShop, 
     searchProductByUser,
     findAllProducts,
-    findProductDetails } = require('../models/repositories/product.repo');
+    findProductDetails, 
+    updateProductById} = require('../models/repositories/product.repo');
+const { removeUndefinedObject, updateNestedObjectParser } = require('../utils');
 
 // define Factory class to create Product
 class ProductFactory {
@@ -29,11 +31,11 @@ class ProductFactory {
         return new productClass(payload).createProduct();
     }
 
-    static async updateProduct(type, payload) {
+    static async updateProduct(type, productId, payload) {
         const productClass = ProductFactory.productRegistry[type];
         if (!productClass) throw new BadRequestError(`Invalid Product Type ${type}`);
 
-        return new productClass(payload).createProduct();
+        return new productClass(payload).updateProduct(productId);
     }
 
     // PUT
@@ -100,6 +102,10 @@ class Product {
     async createProduct(productId) {
         return await product.create({ ...this, _id: productId });
     }
+
+    async updateProduct(productId, payload) {
+        return await updateProductById({productId, payload, model: product});
+    }
 }
 
 // define sub-class for difference product types Clothing
@@ -112,6 +118,25 @@ class Clothing extends Product {
         if (!newProduct) throw new BadRequestError('Error: Create New Product Error');
 
         return newProduct;
+    }
+
+    async updateProduct(productId) {
+        /*
+            {
+                a: undefined,
+                b: null
+            }
+        */
+       // 1. remove attr has null or undefined
+       const objectParams = removeUndefinedObject(this);
+       // 2. check xem update cho nao?
+       if (objectParams.product_attributes) {
+        // update child
+        await updateProductById({productId, objectParams, model: clothing});;
+       }
+
+       const updateProduct = await super.updateProduct(productId, objectParams);
+       return updateProduct;
     }
 }
 
@@ -146,6 +171,31 @@ class Furniture extends Product {
         if (!newProduct) throw new BadRequestError('Error: Create New Product Error');
 
         return newProduct;
+    }
+
+    async updateProduct(productId) {
+        /*
+            {
+                a: undefined,
+                b: null
+            }
+        */
+       // 1. remove attr has null or undefined
+    //    console.log('[1]::', this);
+       const objectParams = removeUndefinedObject(this);
+    //    console.log('[2]::', objectParams);
+       // 2. check xem update cho nao?
+       if (objectParams.product_attributes) {
+        // update child
+        await updateProductById(
+            {
+                productId, 
+                payload: updateNestedObjectParser(objectParams.product_attributes), 
+                model: furniture});;
+       }
+
+       const updateProduct = await super.updateProduct(productId, updateNestedObjectParser(objectParams));
+       return updateProduct;
     }
 }
 
