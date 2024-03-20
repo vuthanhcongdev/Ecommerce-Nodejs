@@ -7,10 +7,10 @@ const { findAllDraftsForShop,
     publishProductByShop, 
     searchProductByUser,
     findAllProducts,
-    findProductDetails, 
+    findProductDetails,
     updateProductById} = require('../models/repositories/product.repo');
-const { removeUndefinedObject, updateNestedObjectParser } = require('../utils');
-const { insertInvenotry } = require('../models/repositories/inventory.repo');
+    const { removeUndefinedObject, updateNestedObjectParser } = require('../utils');
+    const { insertInvenotry } = require('../models/repositories/inventory.repo');
 
 // define Factory class to create Product
 class ProductFactory {
