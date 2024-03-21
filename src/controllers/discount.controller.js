@@ -41,16 +41,6 @@ class DiscountController {
             })
         }).send(res);
     }
-
-    // getDiscountAmount = async (req, res, next) => {
-    //     new SuccessResponse({
-    //         message: 'Success Code Generations',
-    //         metadata: await DiscountService.createDiscountCode({
-    //             ...req.body,
-    //             shopId: req.user.userId
-    //         })
-    //     }).send(res);
-    // }
 }
 
 module.exports = new DiscountController();
