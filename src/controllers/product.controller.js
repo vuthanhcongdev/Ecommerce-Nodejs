@@ -1,6 +1,6 @@
 'use strict'
 
-const { CreatedResponse, SuccessResponse } = require("../cores/success.response");
+const { SuccessResponse } = require("../cores/success.response");
 const ProductService = require('../services/product.service');
 const ProductAdvanceService = require('../services/product.advance.service');
 

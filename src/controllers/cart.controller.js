@@ -1,6 +1,6 @@
 'use strict'
 
-const { CreatedResponse, SuccessResponse } = require("../cores/success.response");
+const { SuccessResponse } = require("../cores/success.response");
 const CartService = require('../services/cart.service');
 
 class CartController {
