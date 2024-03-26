@@ -17,6 +17,13 @@ app.use(express.urlencoded({
 
 // init database
 require('./dbs/init.mongodb.singleton');
+// const initRedis = require('./dbs/init.redis');
+// initRedis.initRedis();  
+
+// test pub.sub redis
+// require('./tests/inventory.test');
+// const productTest = require('./tests/product.test');
+// productTest.purchaseProduct('product:001', 10);
 
 // const { checkOverload } = require('./helpers/check.connect');
 // checkOverload()
