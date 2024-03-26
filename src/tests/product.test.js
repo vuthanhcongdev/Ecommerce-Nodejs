@@ -1,4 +1,4 @@
-const redisPubSubService = require('../services/gitPubSub.service');
+const redisPubSubService = require('../services/redisPubSub.service');
 
 class ProductServiceTest {
     purchaseProduct(productId, quantity) {
